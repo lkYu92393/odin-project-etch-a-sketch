@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Etch a sketch</title>
+</head>
+<body>
+    <div>
+        <div id="script-target"></div>
+    </div>
+    <script>
+        let mousedown = false;
+
+        const mousedownHandler = (e) => {
+            mousedown = true;
+            e.preventDefault();
+        };
+        
+        const mouseupHandler = (e) => {
+            mousedown = false;
+            e.preventDefault();
+        };
+
+        document.addEventListener("mousedown", mousedownHandler);
+        document.addEventListener("mouseup", mouseupHandler);
+        
+
+        const addOneDiv = (tgt) => {
+            let elem = document.createElement("div");
+            elem.setAttribute("class", "grid");
+            elem.addEventListener("mouseover", () => {
+                if (mousedown) {
+                    elem.setAttribute("style", "background-color: black;");
+                }
+            })
+            tgt.appendChild(elem);
+        };
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const tgt = document.getElementById("script-target");
+            for (let i = 0; i < 16; i++) {
+                for (let j = 0; j < 16; j++) {
+                    addOneDiv(tgt);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
