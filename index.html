@@ -9,38 +9,66 @@
 </head>
 <body>
     <div>
+        <header>Etch a sketch</header>
+        <section>
+            
+            <div>Current mode: <mode id="mode">Paint</mode></div>
+            <div>Press<br />1 to switch to paint mode<br />2 to switch to eraser mode</div>        
+        </section>
         <div id="script-target"></div>
     </div>
     <script>
-        let mousedown = false;
+        const modeElem = document.getElementById("mode");
+        const modes = ["paint", "eraser"];
+        let mode = modes[0];
+        let buttondown = false;
 
         const mousedownHandler = (e) => {
-            mousedown = true;
+            buttondown = true;
+            if (e.ctrlKey) {
+                ctrlbuttondown = true;
+            }
             e.preventDefault();
         };
         
         const mouseupHandler = (e) => {
-            mousedown = false;
+            buttondown = false;
+            ctrlbuttondown = false;
             e.preventDefault();
         };
 
+        const keydownHandler = (e) => {
+            if (e.key == 1) {
+                mode = modes[0];
+                modeElem.innerText = "Paint";
+            } else if (e.key == 2) {
+                mode = modes[1];
+                modeElem.innerText = "Eraser";
+            }
+        }
+
         document.addEventListener("mousedown", mousedownHandler);
         document.addEventListener("mouseup", mouseupHandler);
-        
+        document.addEventListener("keydown", keydownHandler);
 
         const addOneDiv = (tgt) => {
             let elem = document.createElement("div");
-            elem.setAttribute("class", "grid");
+            elem.setAttribute("class", "bg-white");
             elem.addEventListener("mouseover", () => {
-                if (mousedown) {
-                    elem.setAttribute("style", "background-color: black;");
+                if (buttondown) {
+                    if (mode == modes[0]) {
+                        elem.setAttribute("class", "bg-black");
+                    }
+                    if (mode == modes[1]) {
+                        elem.setAttribute("class", "bg-white");
+                    }
                 }
             })
             tgt.appendChild(elem);
         };
 
 
-
+        // one-off
         document.addEventListener("DOMContentLoaded", () => {
             const tgt = document.getElementById("script-target");
             for (let i = 0; i < 16; i++) {
