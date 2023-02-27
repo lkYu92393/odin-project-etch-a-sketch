@@ -20,6 +20,10 @@ header {
     font-size: 2rem;
 }
 
+.num-box {
+    width: 50px;
+}
+
 section {
     text-align: center;
 }

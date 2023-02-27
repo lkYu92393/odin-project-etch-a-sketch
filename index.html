@@ -11,7 +11,11 @@
     <div>
         <header>Etch a sketch</header>
         <section>
-            
+            <div>
+                Width:<input type="number" min="1" class="num-box" id="width"/>, 
+                Height: <input type="number" min="1" class="num-box" id="height"/>&nbsp;
+                <button onclick="generate();">Generate</button>
+            </div>
             <div>Current mode: <mode id="mode">Paint</mode></div>
             <div>Press<br />1 to switch to paint mode<br />2 to switch to eraser mode</div>        
         </section>
@@ -25,16 +29,10 @@
 
         const mousedownHandler = (e) => {
             buttondown = true;
-            if (e.ctrlKey) {
-                ctrlbuttondown = true;
-            }
-            e.preventDefault();
         };
         
         const mouseupHandler = (e) => {
             buttondown = false;
-            ctrlbuttondown = false;
-            e.preventDefault();
         };
 
         const keydownHandler = (e) => {
@@ -67,16 +65,19 @@
             tgt.appendChild(elem);
         };
 
+        const generate = () => {
+            let width = parseInt(document.getElementById("width").value);
+            let height = parseInt(document.getElementById("height").value);
 
-        // one-off
-        document.addEventListener("DOMContentLoaded", () => {
             const tgt = document.getElementById("script-target");
-            for (let i = 0; i < 16; i++) {
-                for (let j = 0; j < 16; j++) {
+            tgt.setAttribute("style", `grid-template-rows: repeat(${height}, 20px);grid-template-columns: repeat(${width}, 20px);`)
+            tgt.innerHTML = "";
+            for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
                     addOneDiv(tgt);
                 }
             }
-        });
+        }
     </script>
 </body>
 </html>
